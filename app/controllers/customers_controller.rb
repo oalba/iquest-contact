@@ -33,6 +33,24 @@ class CustomersController < ApplicationController
 
   def update
     @customer = Customer.find(params[:id])
+    unless customer_params[:file].blank?
+      # Deleting previous files
+      file1 = Rails.root.join("public/uploads/", params[:id] +'.*') 
+      files1 = Dir.glob(file1) 
+      files1.each do |f|
+        File.delete(f)
+      end
+      # Uploading new file
+      uploaded_io = customer_params.delete :file
+      File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |files|
+        files.write(uploaded_io.read)
+        new_name = params[:id]
+        # Renaming new file
+        File.rename(files, "public/uploads/" + new_name + File.extname(files))
+        new_file = params[:id] + File.extname(files)
+        customer_params.merge!({file: new_file})
+      end
+    end
 
     if @customer.update(customer_params)
       flash[:success] = "Customer updated successfully."
@@ -53,6 +71,7 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer = Customer.find(params[:id])
+    File.delete('public/uploads/'+ @customer.file)
     if @customer.destroy
       flash[:success] = "Customer deleted successfully."
     else
@@ -70,6 +89,6 @@ class CustomersController < ApplicationController
   private
 
     def customer_params
-      params.require(:customer).permit(:name, :surname, :email, :phone, :comment, :locked, :url, :salutation, :company)
+      @customer_params ||= params.require(:customer).permit(:name, :surname, :email, :phone, :comment, :locked, :url, :salutation, :company, :file)
     end
 end

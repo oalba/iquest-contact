@@ -25,6 +25,13 @@
     <%= f.label :company %><%= f.text_field :company, :class => 'form-control' %>
     <%= f.label :email %>*<%= f.email_field :email, :class => 'form-control', :required => true %>
     <%= f.label :phone %>*<%= f.text_field :phone, :class => 'form-control', :required => true %>
+    <%= f.label :file %><%= f.file_field :file, :class => 'form-control' %>
+    <% if @customer.file %>
+		  <a href="/uploads/<%= @customer.file %>" target="_blank" class='form-control' download>Download</a>
+  	<% else %>
+  		<div class='form-control'>No file uploaded</div>
+  	<% end %>
+  	<br>
     <%= f.label :"Brief comment" %>*<%= f.text_area :comment, :class => 'form-control', :required => true %>
     <br>
     <p>
@@ -39,7 +46,14 @@
   <%= f.label :company %><%= f.text_field :company, :class => 'form-control' %>
   <%= f.label :email %><%= f.email_field :email, :class => 'form-control', :required => true %>
   <%= f.label :phone %><%= f.text_field :phone, :class => 'form-control' %>
-  <%= f.label :"Brief comment" %><%= f.text_area :comment, :class => 'form-control' %>
+  <%= f.label :file %><%= f.file_field :file, :class => 'form-control' %>
+  <% if @customer.file %>
+		<a href="/uploads/<%= @customer.file %>" target="_blank" class='form-control' download>Download</a>
+	<% else %>
+		<div class='form-control'>No file uploaded</div>
+	<% end %>
+	<br>
+  <%= f.label :"Brief comment" %><%= f.text_area :comment, :class => 'form-control text-area' %>
   <label><%= f.check_box :locked %> Locked</label>
   <br>
   <p>
