@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-lg-offset-4 col-lg-4">
+  <%= form_for :customer, url: customers_path do |f| %>
+ 
+  <% if @customer.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@customer.errors.count, "error") %> prohibited
+        this customer from being saved:
+      </h2>
+      <ul>
+        <% @customer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <h2>New customer</h2>
+  <%= f.label :salutation %><%= f.text_field :salutation, :class => 'form-control' %>
+  <%= f.label :name %><%= f.text_field :name, :class => 'form-control' %>
+  <%= f.label :surname %><%= f.text_field :surname, :class => 'form-control' %>
+  <%= f.label :company %><%= f.text_field :company, :class => 'form-control' %>
+  <%= f.label :email %>*<%= f.email_field :email, :class => 'form-control', :required => true %>
+  <%= f.label :phone %><%= f.text_field :phone, :class => 'form-control' %>
+  <%= f.label :"Brief comment" %><%= f.text_area :comment, :class => 'form-control' %>
+  <label><%= f.check_box :locked %> Locked</label>
+  <br>
+  <p>
+    <%= f.submit "Save", :class => 'btn btn-lg btn-primary btn-block' %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', customers_path %>
+</div>
+</div>

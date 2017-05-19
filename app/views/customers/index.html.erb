@@ -1,0 +1,41 @@
+<table align="center" class="table table-hover table-bordered">
+	<tr>
+		<th>ID</th>
+		<th>Salutation</th>
+		<th>Name</th>
+		<th>Surname</th>
+		<th>Company</th>
+		<th>Email</th>
+		<th>Phone</th>
+		<th>Brief comment</th>
+		<th>Locked</th>
+		<!-- <th>URL</th> -->
+		<th>Opened times</th>
+		<th colspan="4">Action</th>
+		<th><%= link_to 'New', new_customer_path %></th>
+	</tr>
+
+	<% @customers.each do |customer| %>
+		<tr>
+			<td><%= customer.id %></td>
+			<td><%= customer.salutation %></td>
+			<td><%= customer.name %></td>
+			<td><%= customer.surname %></td>
+			<td><%= customer.company %></td>
+			<td><%= customer.email %></td>
+			<td><%= customer.phone %></td>
+			<td><%= customer.comment %></td>
+			<% if customer.locked == true %>
+				<td bgcolor="red"><%= customer.locked %></td>
+			<% else %>
+				<td bgcolor="green"><%= customer.locked %></td>
+			<% end %>
+			<td><%= customer.opened_times %></td>
+			<!-- <td><%= customer.url %></td> -->
+			<td><%= link_to 'Show', customer_path(customer) %></td>
+			<td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+			<td><%= link_to 'Send email', email_customer_path(customer) %></td>
+			<td><%= link_to 'Delete', customer_path(customer), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+	<% end %>
+</table>

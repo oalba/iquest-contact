@@ -1,0 +1,4 @@
+<h1>Welcome <%= @customer.salutation %> <%= @customer.surname %></h1>
+<p>
+  To access to the site and change your information, just follow this link: <%= link_to 'iQuest profile', edit_customer_url(@customer) %>.
+</p>
